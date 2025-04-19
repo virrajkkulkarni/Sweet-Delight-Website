@@ -1,0 +1,93 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Delights - Bill</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #fff5e1;
+            color: #6b4f4f;
+        }
+        .bill-container {
+            background-color: white;
+            padding: 20px;
+            margin: 50px auto;
+            width: 50%;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .payment-options {
+            margin: 20px 0;
+        }
+        .place-order-btn {
+            background-color: #ff6f61;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .place-order-btn:hover {
+            background-color: #ff3b2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="bill-container">
+        <h2>Order Summary</h2>
+        <div id="order-items"></div>
+        <p>Total Amount: Rs. <span id="total-amount"></span></p>
+        <div class="payment-options">
+            <label><input type="radio" name="payment" checked> Cash on Delivery</label>
+            <label><input type="radio" name="payment"> UPI Payment</label>
+        </div>
+        <button class="place-order-btn" onclick="placeOrder()">Place Order</button>
+    </div>
+    <script>
+// Fetch ordered items instead of cartItems
+const orderItems = JSON.parse(localStorage.getItem('orderedItems')) || [];
+
+// Display order details
+document.getElementById('order-items').innerHTML = orderItems.map(item => 
+    `<p>${item.name} x ${item.quantity} - Rs. ${item.price * item.quantity}</p>`).join('');
+document.getElementById('total-amount').textContent = orderItems.reduce(
+    (total, item) => total + (item.price * item.quantity), 0);function placeOrder() {
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    let stock = JSON.parse(localStorage.getItem('stock')) || {};
+
+    for (let item of cartItems) {
+        if (stock[item.name]) {
+            if (stock[item.name].quantity >= item.quantity) {
+                stock[item.name].quantity -= item.quantity; // Reduce only ordered quantity
+            } else {
+                alert(`Not enough stock for ${item.name}. Available: ${stock[item.name].quantity}`);
+                return;
+            }
+        }
+    }
+
+    // Save updated stock back to localStorage
+    localStorage.setItem('stock', JSON.stringify(stock));
+
+    // Clear cart after order placement
+    localStorage.removeItem('cartItems');
+
+    
+    window.location.href = "success.html";  // Redirect to success page
+}
+
+        
+function updateStock() {
+    let stock = JSON.parse(localStorage.getItem('stock')) || {};
+    orderItems.forEach(item => {
+        if (stock[item.name]) {
+            stock[item.name] -= item.quantity;
+        }
+    });
+    localStorage.setItem('stock', JSON.stringify(stock));
+}
+    </script>
+</body>
+</html>

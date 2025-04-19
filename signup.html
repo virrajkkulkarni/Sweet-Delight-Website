@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('img2.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            width: 90%;
+            max-width: 450px;
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+    
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+    
+        h1 {
+            color: #333;
+            margin-bottom: 2rem;
+            font-size: 2.2em;
+            letter-spacing: -0.5px;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+    
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: red;
+            border-radius: 2px;
+        }
+    
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 0.6rem;
+            color: #444;
+            font-weight: 600;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+    
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+    
+        input:focus {
+            outline: none;
+            border-color: red;
+            background: #fff;
+            box-shadow: 0 3px 10px rgba(255, 0, 0, 0.1);
+        }
+    
+        input:hover {
+            border-color: #ccc;
+        }
+    
+        input[type="radio"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            margin-right: 8px;
+            position: relative;
+            top: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+    
+        input[type="radio"]:checked {
+            border-color: red;
+            background: radial-gradient(red 50%, transparent 55%);
+        }
+    
+        input[type="submit"] {
+            background: linear-gradient(135deg, red 0%, #ff4444 100%);
+            padding: 15px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+    
+        input[type="submit"]:hover {
+            background: linear-gradient(135deg, #ff4444 0%, red 100%);
+            letter-spacing: 1px;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
+        }
+    
+        .error-message {
+            color: #ff4444;
+            font-size: 0.85em;
+            margin-top: 5px;
+            padding: 8px 12px;
+            background: rgba(255, 0, 0, 0.05);
+            border-radius: 5px;
+            display: inline-block;
+            border: 1px solid rgba(255, 0, 0, 0.1);
+        }
+    
+        .form-group.radio-group {
+            display: flex;
+            gap: 1.5rem;
+            padding: 10px 0;
+        }
+    
+        .form-group.radio-group label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0;
+            font-weight: 500;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Sign Up</h1>
+    <form id="signup-form">
+        <div class="form-group">
+            <label for="email">Username:</label>
+            <input type="text" id="email" name="email" placeholder="Enter your Username" required>
+        </div>
+        
+
+        <div class="form-group">
+            <label for="dob">Date Of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" placeholder="Enter your Address" required>
+        </div>
+
+        <div class="form-group">
+            <label>Gender:</label>
+            <input type="radio" name="gender" value="Male" id="male" required> Male
+            <input type="radio" name="gender" value="Female" id="female"> Female
+        </div>
+
+        <div class="form-group">
+            <label for="name">Email:</label>
+            <input type="email" id="name" name="name" placeholder="Enter Your Email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="passwordConfirm">Confirm Password:</label>
+            <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm your password" required>
+            <p class="error-message" id="password-error"></p>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="SIGN UP">
+        </div>
+    </form>
+</div>
+
+<script>
+document.getElementById('signup-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const dob = document.getElementById("dob").value;
+    const address = document.getElementById("address").value;
+    const gender = document.querySelector("input[name='gender']:checked")?.value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const passwordConfirm = document.getElementById("passwordConfirm").value;
+
+    // Validate Password Match
+    if (password !== passwordConfirm) {
+        document.getElementById("password-error").innerText = "Passwords do not match!";
+        return;
+    } else {
+        document.getElementById("password-error").innerText = "";
+    }
+
+    // Send Data to Server
+    fetch("http://localhost:3000/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, dob, address, gender, email, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        if (data.message === "User registered successfully!") {
+            window.location.href = "loginpage.html"; // Redirect to login after signup
+        }
+    })
+    .catch(error => console.error("Error:", error));
+});
+</script>
+
+</body>
+</html>

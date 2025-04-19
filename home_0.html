@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Delights</title>
+    <style>
+        body { 
+            font-family: 'Comic Sans MS', cursive, sans-serif; 
+            background-color: #fff5e1; 
+            color: #6b4f4f; 
+            margin: 0; 
+            padding: 0; 
+        }
+        header { 
+            background-color: red; 
+            padding: 20px; 
+            text-align: center; 
+            color: white; 
+        }
+        header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        padding: 20px;
+    }
+
+    .blinking-text {
+        font-size: 20px;
+        font-weight: bold;
+        color: yellow;
+        border: 2px solid yellow;
+        padding: 10px 15px;
+        border-radius: 5px;
+        animation: blink 1s infinite alternate, border-blink 1s infinite alternate;
+        position: absolute;
+        right: 20px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    @keyframes blink {
+        0% { opacity: 1; }
+        100% { opacity: 0; }
+    }
+
+    @keyframes border-blink {
+        0% { border-color: yellow; background-color: transparent; }
+        100% { border-color: red; background-color: rgba(255, 0, 0, 0.2); }
+    }
+        nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 10px 20px; 
+            background-color: yellow; 
+        }
+        nav .logo { 
+            font-size: 24px; 
+            font-weight: bold; 
+            color: #6b4f4f; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+        }
+        .catalogue, .fresh-sweet, .namkeen { 
+            cursor: pointer; 
+            color: #6b4f4f; 
+            font-size: 18px; 
+            text-decoration: underline; 
+        }
+        nav .auth-buttons button { 
+            background-color: red; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            margin-left: 10px; 
+            cursor: pointer; 
+            border-radius: 5px; 
+        }
+        .section-title { 
+            font-size: 28px; 
+            margin-top: 40px; 
+            color: #6b4f4f; 
+        }
+        .about-us {
+            background-color: #fff5e1;
+            padding: 40px 20px;
+            text-align: center;
+            color: #6b4f4f;
+        }
+        .about-us h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #ff6f61;
+        }
+        .about-us p {
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 50px 20px;
+            overflow: hidden;
+        }
+        .hero .bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        .hero img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 200px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero h1 {
+            font-size: 36px;
+            margin: 20px 0;
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+        .hero p {
+            font-size: 18px;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+        iframe {
+            width: 100%; 
+            height: 80vh; 
+            border: none; 
+            margin-top: 20px;
+        }
+        #catalogue-section, #fresh-sweet-section, #namkeen-section { 
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Sweet Delights</h1>
+        <p class="blinking-text" onclick="redirectToLogin()">Login to view cart</p>
+
+    </header>
+
+    <nav>
+        <div class="logo" onclick="openHomePage()">
+            Sweet Delights
+            <span class="catalogue" onclick="openCatalogue(event)">Catalogue</span>
+            <span class="fresh-sweet" onclick="openFreshSweet(event)">Fresh Sweets</span>
+            <span class="namkeen" onclick="openNamkeen(event)">Namkeen</span>
+        </div>
+        <div class="auth-buttons">
+            <button onclick="location.href='loginpage.html'">Login</button>
+            <button onclick="location.href='signup.html'">Sign Up</button>
+            <button onclick="location.href='adminlogin.html'">Admin Login</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <video class="bg-video" autoplay muted loop>
+            <source src="vid1.mp4" type="video/mp4">
+        </video>
+        <img src="img2.jpg" alt="Sweet Shop Image">
+        <h1>Indulge in the Sweetest Treats</h1>
+        <p>We offer a wide variety of delicious sweets and desserts. Visit us today for a delightful experience!</p>
+    </section>
+
+    <section class="about-us">
+        <h2>About Sweet Delights</h2>
+        <p>Welcome to Sweet Delights, your one-stop destination for the finest sweets, namkeen, and fresh desserts...</p>
+    </section>
+
+    <div id="catalogue-section">
+        <iframe src="catalog_page/catalog.html"></iframe>
+    </div>
+
+    <div id="fresh-sweet-section">
+        <iframe src="fresh sweet/freshsweet1.html"></iframe>
+    </div>
+
+    <div id="namkeen-section">
+        <iframe src="fresh sweet/namkeen1.html"></iframe>
+    </div>
+
+    <script>
+        function redirectToLogin() {
+        window.location.href = 'loginpage.html';
+    }
+
+        function openCatalogue(event) {
+            event.stopPropagation();
+            hideAllSections();
+            document.getElementById('catalogue-section').style.display = 'block';
+        }
+
+        function openFreshSweet(event) {
+            event.stopPropagation();
+            hideAllSections();
+            document.getElementById('fresh-sweet-section').style.display = 'block';
+        }
+
+        function openNamkeen(event) {
+            event.stopPropagation();
+            hideAllSections();
+            document.getElementById('namkeen-section').style.display = 'block';
+        }
+
+        function openHomePage() {
+            hideAllSections();
+            document.querySelector('.hero').style.display = 'block';
+            document.querySelector('.about-us').style.display = 'block';
+        }
+
+        function hideAllSections() {
+            document.querySelector('.hero').style.display = 'none';
+            document.querySelector('.about-us').style.display = 'none';
+            document.getElementById('catalogue-section').style.display = 'none';
+            document.getElementById('fresh-sweet-section').style.display = 'none';
+            document.getElementById('namkeen-section').style.display = 'none';
+        }
+
+        window.onload = function() {
+            let loggedInUser = localStorage.getItem('loggedInUser');
+            if (loggedInUser) {
+                document.querySelector('.auth-buttons').innerHTML = `<span>Welcome, ${loggedInUser}</span>`;
+            }
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Delights</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { 
+            font-family: 'Comic Sans MS', cursive, sans-serif; 
+            background-color: #fff5e1; 
+            color: #6b4f4f; 
+            margin: 0; 
+            padding: 0; 
+        }
+        header { 
+            background-color: red; 
+            padding: 20px; 
+            text-align: center; 
+            color: white; 
+        }
+        nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 10px 20px; 
+            background-color: yellow; 
+        }
+        nav .logo { 
+            font-size: 24px; 
+            font-weight: bold; 
+            color: #6b4f4f; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+        }
+        .catalogue, .fresh-sweet, .namkeen { 
+            cursor: pointer; 
+            color: #6b4f4f; 
+            font-size: 18px; 
+            text-decoration: underline; 
+        }
+        nav .auth-buttons button { 
+            background-color: red; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            margin-left: 10px; 
+            cursor: pointer; 
+            border-radius: 5px; 
+        }
+        .view-cart-button { 
+            background-color: yellow; 
+            color: #6b4f4f; 
+            padding: 10px 15px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin-top: 20px; 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+        }
+        .view-cart-button:hover { 
+            background-color: yellow; 
+        }
+        .section-title { 
+            font-size: 28px; 
+            margin-top: 40px; 
+            color: #6b4f4f; 
+        }
+        .about-us {
+            background-color: #fff5e1;
+            padding: 40px 20px;
+            text-align: center;
+            color: #6b4f4f;
+        }
+
+        .about-us h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #ff6f61;
+        }
+
+        .about-us p {
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 50px 20px;
+            overflow: hidden;
+        }
+
+        .hero .bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .hero img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 200px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin: 20px 0;
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .products-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            justify-items: center;
+        }
+
+        .product-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 200px;
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product-card h3 {
+            margin: 10px 0;
+            color: #6b4f4f;
+        }
+
+        .product-card p {
+            color: #ff6f61;
+            font-size: 18px;
+        }
+
+        .add-to-cart-button {
+            background-color: #ff6f61;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .add-to-cart-button:hover {
+            background-color: #ff3b2f;
+        }
+
+        iframe {
+            width: 100%; 
+            height: 80vh; 
+            border: none; 
+            margin-top: 20px;
+        }
+
+        #catalogue-section, #fresh-sweet-section, #namkeen-section { 
+            display: none; 
+        }
+        .user-greeting {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .user-badge {
+            background-color: #ff6f61;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+            display: inline-flex;
+            align-items: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .user-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            background-color: #ff3b2f;
+        }
+        
+        .user-badge::before {
+            content: "👋";
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .user-email {
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            margin-left: 10px;
+        }
+        body {
+        font-family: 'Poppins', sans-serif;
+        background-image: linear-gradient(rgba(0,0,0,0.7), url('img2.jpg');
+        background-size: cover;
+        background-position: center;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        backdrop-filter: blur(3px);
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        width: 90%;
+        max-width: 450px;
+        transform: translateY(0);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .container:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+        color: #333;
+        margin-bottom: 2rem;
+        font-size: 2.4em;
+        letter-spacing: -0.5px;
+        position: relative;
+        padding-bottom: 0.5rem;
+        text-align: center;
+    }
+
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, red 0%, #ff6b6b 100%);
+        border-radius: 4px;
+    }
+
+    .form-group {
+        margin-bottom: 1.8rem;
+        position: relative;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.8rem;
+        color: #444;
+        font-weight: 600;
+        font-size: 0.95em;
+        letter-spacing: 0.5px;
+        padding-left: 8px;
+        border-left: 3px solid red;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="password"] {
+        width: 100%;
+        padding: 14px 18px;
+        font-size: 15px;
+        border: 2px solid #eee;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        background: #f9f9f9;
+        padding-left: 45px;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: red;
+        background: #fff;
+        box-shadow: 0 5px 15px rgba(255, 0, 0, 0.1);
+    }
+
+    input:hover {
+        border-color: #ffcccc;
+    }
+
+    /* Add input icons */
+    .form-group:not(.radio-group)::before {
+        content: '';
+        position: absolute;
+        left: 15px;
+        bottom: 13px;
+        width: 24px;
+        height: 24px;
+        background-size: contain;
+        opacity: 0.6;
+    }
+
+    #email::before { background-image: url('data:image/svg+xml;utf8,<svg ...></svg>'); } /* Add user icon SVG */
+    #dob::before { background-image: url('data:image/svg+xml;utf8,<svg ...></svg>'); } /* Add calendar icon */
+    #address::before { background-image: url('data:image/svg+xml;utf8,<svg ...></svg>'); } /* Add location icon */
+    #name::before { background-image: url('data:image/svg+xml;utf8,<svg ...></svg>'); } /* Add email icon */
+    #password::before,
+    #passwordConfirm::before { background-image: url('data:image/svg+xml;utf8,<svg ...></svg>'); } /* Add lock icon */
+
+    input[type="radio"] {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #ccc;
+        border-radius: 50%;
+        margin-right: 10px;
+        position: relative;
+        top: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    input[type="radio"]:checked {
+        border-color: red;
+        background: radial-gradient(red 60%, transparent 65%);
+        box-shadow: 0 0 10px rgba(255,0,0,0.2);
+    }
+
+    input[type="submit"] {
+        background: linear-gradient(135deg, red 0%, #ff6b6b 100%);
+        padding: 16px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        border-radius: 10px;
+        margin-top: 1.5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    input[type="submit"]:hover {
+        letter-spacing: 1.5px;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
+    }
+
+    input[type="submit"]::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+        transform: rotate(45deg);
+        animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+        0% { transform: translateX(-150%) rotate(45deg); }
+        100% { transform: translateX(150%) rotate(45deg); }
+    }
+
+    .error-message {
+        color: #ff4444;
+        font-size: 0.85em;
+        margin-top: 8px;
+        padding: 10px 15px;
+        background: rgba(255, 0, 0, 0.05);
+        border-radius: 8px;
+        display: inline-block;
+        border: 1px solid rgba(255, 0, 0, 0.1);
+        animation: shake 0.4s ease;
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+
+    .form-group.radio-group {
+        display: flex;
+        gap: 2rem;
+        padding: 12px 0;
+        background: rgba(255, 245, 245, 0.5);
+        border-radius: 8px;
+        margin: 1rem 0;
+        justify-content: center;
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Sweet Delights</h1>
+        <div class="user-greeting">
+            <div class="user-badge">Welcome</div>
+            <span id="user-email" class="user-email"></span>
+        </div>
+    </header>
+
+<nav>
+    <div class="logo" onclick="openHomePage()">
+        Sweet Delights
+        <span class="catalogue" onclick="openCatalogue(event)">Catalogue</span>
+        <span class="fresh-sweet" onclick="openFreshSweet(event)">Fresh Sweets</span>
+        <span class="namkeen" onclick="openNamkeen(event)">Namkeen</span>
+        
+
+    </div>
+    <div class="auth-buttons">
+        <button onclick="location.href='adminlogin.html'">Admin Login</button>
+        <button onclick="logout()" style="background-color: red;">Logout</button>
+
+    </div>
+</nav>
+
+    <button class="view-cart-button" onclick="window.location.href='cart_exp.html'">View Cart</button>
+
+    <section class="hero">
+        <video class="bg-video" autoplay muted loop>
+            <source src="vid1.mp4" type="video/mp4">
+        </video>
+        <img src="img2.jpg" alt="Sweet Shop Image">
+        <h1>Indulge in the Sweetest Treats</h1>
+        <p>We offer a wide variety of delicious sweets and desserts. Visit us today for a delightful experience!</p>
+    </section>
+
+    <section class="about-us">
+        <h2>About Sweet Delights</h2>
+        <p>Welcome to Sweet Delights, your one-stop destination for the finest sweets, namkeen, and fresh desserts...</p>
+    </section>
+
+    <div id="catalogue-section">
+        <iframe src="catalog_page/catalog.html"></iframe>
+    </div>
+
+    <div id="fresh-sweet-section">
+        <iframe src="fresh sweet/freshsweet1.html"></iframe>
+    </div>
+
+    <div id="namkeen-section">
+        <iframe src="fresh sweet/namkeen1.html"></iframe>
+    </div>
+
+    <script>
+        function openCatalogue(event) {
+            event.stopPropagation();
+            hideAllSections();
+            document.getElementById('catalogue-section').style.display = 'block';
+        }
+
+        function openFreshSweet(event) {
+            event.stopPropagation();
+            hideAllSections();
+            document.getElementById('fresh-sweet-section').style.display = 'block';
+        }
+
+        function openNamkeen(event) {
+            event.stopPropagation();
+            hideAllSections();
+            document.getElementById('namkeen-section').style.display = 'block';
+        }
+
+        function openHomePage() {
+            hideAllSections();
+            document.querySelector('.hero').style.display = 'block';
+            document.querySelector('.about-us').style.display = 'block';
+        }
+
+        function hideAllSections() {
+            document.querySelector('.hero').style.display = 'none';
+            document.querySelector('.about-us').style.display = 'none';
+            document.getElementById('catalogue-section').style.display = 'none';
+            document.getElementById('fresh-sweet-section').style.display = 'none';
+            document.getElementById('namkeen-section').style.display = 'none';
+        }
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'home_0.html';
+        }
+        // Display email on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const storedEmail = localStorage.getItem('userEmail');
+    if (storedEmail) {
+        document.getElementById('user-email').textContent = storedEmail;
+    }
+});
+    </script>
+</body>
+</html>

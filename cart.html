@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="cartApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Delights - Cart</title>
+    <style>
+        /* Internal CSS - Same as the homepage */
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff5e1;
+            color: #6b4f4f;
+        }
+
+        header {
+            background-color: red;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: yellow;
+        }
+
+        nav .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6b4f4f;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        nav .auth-buttons button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-left: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        nav .auth-buttons button:hover {
+            background-color: #ff3b2f;
+        }
+
+        .cart-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .cart-container {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 20px;
+            justify-items: center;
+        }
+
+        .cart-item {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        .cart-item h3 {
+            margin: 10px 0;
+            color: #6b4f4f;
+        }
+
+        .cart-item p {
+            color: #ff6f61;
+            font-size: 18px;
+        }
+
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .remove-button {
+            background-color: #ff3b2f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .remove-button:hover {
+            background-color: #ff1a1a;
+        }
+
+        .checkout-button {
+            background-color: #ff6f61;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .checkout-button:hover {
+            background-color: #ff3b2f;
+        }
+
+        .total-amount {
+            font-size: 24px;
+            color: #6b4f4f;
+            margin-top: 20px;
+        }
+    </style>
+    <!-- Include AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="CartController">
+    <header>
+        <h1>Your Cart</h1>
+    </header>
+
+    <nav>
+        <div class="logo" onclick="location.href='home_1.html'">
+            Sweet Delights
+        </div>
+        <div class="auth-buttons">
+            <button onclick="location.href='LOGIN PAGE/loginpage.html'">Login</button>
+            <button onclick="location.href='SIGNUP PAGE/signup.html'">Sign Up</button>                
+        </div>
+    </nav>
+
+    <section class="cart-section">
+        <div class="cart-container">
+            <!-- Cart Items will be dynamically loaded here -->
+            <div class="cart-item" ng-repeat="item in cartItems">
+                <h3>{{ item.name }}</h3>
+                <p>Rs. {{ item.price * item.quantity }}</p>
+                <input type="number" class="quantity-input" ng-model="item.quantity" min="1" ng-change="updateTotal()">
+                <button class="remove-button" ng-click="removeItem(item)">Remove</button>
+            </div>
+
+            <!-- Display a message if the cart is empty -->
+            <div ng-if="cartItems.length === 0">
+                <p>Your cart is empty. Add some sweet delights!</p>
+            </div>
+        </div>
+
+        <!-- Total Amount -->
+        <div class="total-amount" ng-if="cartItems.length > 0">
+            Total: Rs. {{ totalAmount }}
+        </div>
+
+        <!-- Checkout Button (only visible if cart is not empty) -->
+        <button class="checkout-button" ng-click="location.href='bill.html'" ng-if="cartItems.length > 0">Checkout</button>
+    </section>
+
+    <script>
+        // AngularJS App and Controller
+        var app = angular.module('cartApp', []);
+
+        app.controller('CartController', function ($scope) {
+            // Retrieve cart items from local storage
+            $scope.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            // Calculate total amount
+            $scope.updateTotal = function () {
+                $scope.totalAmount = $scope.cartItems.reduce(function (total, item) {
+                    return total + (item.price * item.quantity);
+                }, 0);
+                // Update local storage
+                localStorage.setItem('cartItems', JSON.stringify($scope.cartItems));
+            };
+
+            // Remove item from cart
+            $scope.removeItem = function (item) {
+                const index = $scope.cartItems.indexOf(item);
+                if (index > -1) {
+                    $scope.cartItems.splice(index, 1);
+                }
+                $scope.updateTotal();
+            };
+
+            // Checkout function
+            $scope.checkout = function () {
+                if ($scope.cartItems.length === 0) {
+                    alert('Your cart is empty!');
+                    return;
+                }
+                alert('Proceeding to checkout. Thank you for your purchase!');
+                // Clear cart after checkout
+                $scope.cartItems = [];
+                localStorage.removeItem('cartItems');
+                $scope.updateTotal();
+            };
+
+            // Initial total calculation
+            $scope.updateTotal();
+        });
+    </script>
+</body>
+</html>

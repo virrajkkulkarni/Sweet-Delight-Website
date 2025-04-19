@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="adminApp">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Stock Management</title>
+    <style>
+            body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+        min-height: 100vh;
+        padding: 2rem;
+    }
+
+    h1 {
+        text-align: center;
+        color:black;
+        font-size: 2.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        margin-bottom: 2rem;
+        position: relative;
+        padding-bottom: 1rem;
+    }
+
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 3px;
+        background: white;
+        border-radius: 2px;
+    }
+
+    .dashboard-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        margin: 0 auto;
+        max-width: 1200px;
+    }
+
+    .stock-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .stock-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stock-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .stock-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .item-name {
+        font-weight: 600;
+        color: #333;
+        font-size: 1.1rem;
+    }
+
+    .stock-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+
+    .price-tag {
+        background: linear-gradient(45deg, #4CAF50, #8BC34A);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+    }
+
+    .stock-quantity {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #333;
+        position: relative;
+    }
+
+    .stock-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .action-btn {
+        flex: 1;
+        padding: 0.8rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-weight: 600;
+    }
+
+    .add-btn {
+        background: linear-gradient(45deg, #4CAF50, #8BC34A);
+        color: white;
+    }
+
+    .remove-btn {
+        background: linear-gradient(45deg, #ff416c, #ff4b2b);
+        color: white;
+    }
+
+    .action-btn:hover {
+        opacity: 0.9;
+        transform: scale(1.05);
+    }
+
+    .home-btn {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: white;
+        color: #ff416c;
+        padding: 1rem 2rem;
+        border-radius: 30px;
+        border: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .home-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    /* Loading animation */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .stock-card {
+        animation: fadeIn 0.5s ease forwards;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .dashboard-container {
+            padding: 1rem;
+        }
+        
+        .stock-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 10px; text-align: center; }
+        th { background: orangered; color: white; }
+        button { padding: 5px 10px; cursor: pointer; margin: 2px; }
+        .add-btn { background: green; color: white; border: none; }
+        .remove-btn { background: red; color: white; border: none; }
+    </style>
+    <!-- Include AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="AdminController">
+    <div class="dashboard-container">
+        <h1>Stock Management Dashboard</h1>
+        
+        <div class="stock-grid">
+            <div class="stock-card" ng-repeat="(item, details) in stock">
+                <div class="stock-header">
+                    <div class="item-name">{{ item }}</div>
+                    <div class="price-tag">₹{{ details.price }}</div>
+                </div>
+                
+                <div class="stock-info">
+                    <div>Stock:</div>
+                    <div class="stock-quantity">{{ details.quantity }}</div>
+                </div>
+
+                <div class="stock-actions">
+                    <button class="action-btn add-btn" ng-click="updateStock(item, 'add')">
+                        <span>➕</span> Add
+                    </button>
+                    <button class="action-btn remove-btn" ng-click="updateStock(item, 'remove')">
+                        <span>➖</span> Remove
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="home-btn" onclick="window.location.href='home_1.html'">
+        🏠 Return Home
+    </button>
+    <script>
+        var app = angular.module('adminApp', []);
+    
+        app.controller('AdminController', function ($scope, $timeout, $http) {
+            const defaultStock = {
+                "Milk Cake": { price: 399, quantity: 10 },
+                "Kaju Katli": { price: 999, quantity: 8 },
+                "Peda": { price: 399, quantity: 15 },
+                "Rasgulla": { price: 499, quantity: 12 },
+                "Soan Papdi": { price: 299, quantity: 10 },
+                "Gulab Jamun": { price: 399, quantity: 14 },
+                "Jalebi": { price: 499, quantity: 9 },
+                "Natkhat Nimbu 200g": { price: 60, quantity: 20 },
+                "Aloo Lachha": { price: 55, quantity: 18 },
+                "Lajawab Mixture": { price: 65, quantity: 15 },
+                "Bhelpuri Mixture": { price: 60, quantity: 16 },
+                "Matar Masala": { price: 55, quantity: 22 },
+                "Boondi": { price: 60, quantity: 17 },
+                "Khatta Meetha": { price: 65, quantity: 13 }
+            };
+    
+            // Load stock from localStorage or use default values
+            let storedStock = JSON.parse(localStorage.getItem('stock'));
+    
+            if (!storedStock || Object.keys(storedStock).length === 0) {
+                storedStock = defaultStock;
+                localStorage.setItem('stock', JSON.stringify(storedStock));
+            }
+    
+            $scope.stock = storedStock;
+    
+            // Function to update stock
+            $scope.updateStock = function (item, action) {
+                let qty = prompt(`Enter quantity to ${action} for ${item}:`);
+                if (qty && !isNaN(qty) && parseInt(qty) > 0) {
+                    qty = parseInt(qty);
+    
+                    if (action === 'add') {
+                        $scope.stock[item].quantity += qty;
+                        alert(`${qty} units added to ${item}.`);
+                    } else if (action === 'remove') {
+                        if ($scope.stock[item].quantity - qty < 0) {
+                            alert(`Not enough stock! You only have ${$scope.stock[item].quantity} units.`);
+                            return;
+                        } else {
+                            $scope.stock[item].quantity -= qty;
+                            alert(`${qty} units removed from ${item}.`);
+                            
+                            // Check if stock reached zero after removal
+                            if ($scope.stock[item].quantity === 0) {
+                                alert(`⚠️ WARNING: ${item} is now OUT OF STOCK!`);
+                            }
+                        }
+                    }
+    
+                    // Save updated stock to localStorage
+                    localStorage.setItem('stock', JSON.stringify($scope.stock));
+    
+                    // 🔁 Sync updated item to database
+                    $http.post('http://localhost/update_stock.php', {
+                        item: item,
+                        price: $scope.stock[item].price,
+                        quantity: $scope.stock[item].quantity
+                    }).then(function (res) {
+                        console.log(res.data.message);
+                    }).catch(function (err) {
+                        console.error("Failed to sync with DB:", err);
+                    });
+                }
+            };
+        });
+    </script>
+    
+</body>
+</html>
